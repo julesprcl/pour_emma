@@ -14,7 +14,6 @@
         }
 
         body {
-            /* Fond dégradé doux et romantique */
             background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #a1c4fd 100%);
             min-height: 100vh;
             display: flex;
@@ -24,16 +23,13 @@
         }
 
         .card {
-            background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(10px);
+            background: #ffffff;
             padding: 35px 25px;
             border-radius: 24px;
-            box-shadow: 0 15px 35px rgba(225, 112, 137, 0.25);
+            box-shadow: 0 15px 35px rgba(225, 112, 137, 0.3);
             max-width: 420px;
             width: 100%;
             text-align: center;
-            border: 2px solid rgba(255, 255, 255, 0.8);
-            position: relative;
         }
 
         .header-icon {
@@ -54,7 +50,6 @@
             margin-bottom: 25px;
         }
 
-        /* BOÎTE HEURE */
         .time-box {
             background: #fff0f5;
             border: 2px dashed #ff85a2;
@@ -73,10 +68,9 @@
             margin-bottom: 15px;
         }
 
-        /* POINT GPS */
         .gps-coords {
             font-family: monospace;
-            background: #ffffff;
+            background: #f8f9fa;
             padding: 12px;
             border-radius: 12px;
             color: #d63384;
@@ -85,5 +79,66 @@
             letter-spacing: 1px;
             margin-bottom: 15px;
             border: 1px solid #f8d7da;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.03);
         }
+
+        .btn-copy {
+            background: #ff6b81;
+            color: #ffffff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .btn-maps {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: #70a1ff;
+            color: #ffffff;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 12px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <div class="header-icon">✨ 💌 ✨</div>
+        <h1>Invitation Spéciale</h1>
+        <p class="subtitle">Un petit moment sympa de prévu !</p>
+
+        <div class="time-box">
+            🕒 Rendez-vous à 20h30
+        </div>
+
+        <p class="instruction">
+            Copie le point GPS ci-dessous et colle-le dans ton appli de navigation (Google Maps, Waze, Apple Maps) :
+        </p>
+
+        <div class="gps-coords" id="coords">45.9308, 6.1174</div>
+
+        <button class="btn-copy" onclick="copyGPS()">📋 Copier le point GPS</button>
+
+        <a id="maps-link" href="https://maps.google.com/?q=45.9308,6.1174" target="_blank" class="btn-maps">
+            🗺️ Ouvrir dans Google Maps
+        </a>
+    </div>
+
+    <script>
+        function copyGPS() {
+            const coordsText = document.getElementById('coords').innerText.trim();
+            navigator.clipboard.writeText(coordsText).then(() => {
+                alert('Point GPS copié ! Tu peux le coller dans ta carte.');
+            });
+        }
+    </script>
+
+</body>
+</html>
