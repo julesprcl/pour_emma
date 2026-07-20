@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rendez-vous Ce Soir</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #0f172a;
+            color: #f8fafc;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .card {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 24px;
+            padding: 35px 25px;
+            max-width: 450px;
+            width: 100%;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            text-align: center;
+        }
+
+        .badge {
+            background: linear-gradient(135deg, #e11d48, #f43f5e);
+            color: #fff;
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #ffffff;
+        }
+
+        .subtitle {
+            color: #94a3b8;
+            font-size: 0.95rem;
+            margin-bottom: 30px;
+        }
+
+        /* SECTION DATE */
+        .date-box {
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .date-title {
+            color: #f43f5e;
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .time-title {
+            color: #cbd5e1;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        /* SECTION LIEU */
+        .location-section {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .location-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .location-header h2 {
+            font-size: 1.1rem;
+            color: #f8fafc;
+        }
+
+        .location-address {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .map-container {
+            width: 100%;
+            height: 220px;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid #334155;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* BOUTON D'ACTION */
+        .btn-confirm {
+            display: block;
+            width: 100%;
+            background: linear-gradient(135deg, #e11d48, #f43f5e);
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 14px;
+            border-radius: 12px;
+            margin-top: 25px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px 15px rgba(225, 29, 72, 0.3);
+        }
+
+        .btn-confirm:active {
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <span class="badge">Invitation Spéciale</span>
+        <h1>Rendez-vous Ce Soir</h1>
+        <p class="subtitle">Prépare-toi, un moment sympa t'attend !</p>
+
+        <div class="date-box">
+            <div class="date-title">📅 Ce Soir</div>
+            <div class="time-title">🕒 À 20h30 précise</div>
+        </div>
+
+        <div class="location-section">
+            <div class="location-header">
+                <h2>📍 Lieu du rendez-vous</h2>
+            </div>
+            <p class="location-address">Le Palais de l'Isle, Vieille Ville, Annecy</p>
+
+            <div class="map-container">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2776.848833190823!2d6.124503776882252!3d45.89828330462002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x478b8a4f9136ee1b%3A0x6b8f8fb4417fbd2e!2sLe%20Palais%20de%20l&#39;%C3%8Esle!5e0!3m2!1sfr!2sfr!4v1700000000000!5m2!1sfr!2sfr" 
+                    allowfullscreen="" 
+                    loading="lazy">
+                </iframe>
+            </div>
+        </div>
+
+        <a href="https://maps.google.com" target="_blank" class="btn-confirm">Ouvrir dans Google Maps</a>
+    </div>
+
+</body>
+</html>
