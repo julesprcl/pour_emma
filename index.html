@@ -20,8 +20,81 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
+            position: relative;
         }
 
+        /* Bouton Admin */
+        .admin-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            border: none;
+            font-size: 1.2rem;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .admin-toggle:hover {
+            transform: rotate(45deg);
+        }
+
+        /* Panneau de configuration Admin */
+        .admin-panel {
+            display: none;
+            position: absolute;
+            top: 70px;
+            right: 20px;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            width: 300px;
+            z-index: 100;
+        }
+
+        .admin-panel.active {
+            display: block;
+        }
+
+        .admin-panel h3 {
+            font-size: 1rem;
+            color: #d63384;
+            margin-bottom: 12px;
+        }
+
+        .admin-panel label {
+            font-size: 0.8rem;
+            color: #6c757d;
+            display: block;
+            margin-top: 8px;
+        }
+
+        .admin-panel input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 4px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .admin-panel button {
+            margin-top: 15px;
+            width: 100%;
+            padding: 10px;
+            background: #2ed573;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* Carte Principale */
         .card {
             background: #ffffff;
             padding: 35px 25px;
@@ -55,7 +128,7 @@
             border: 2px dashed #ff85a2;
             padding: 15px;
             border-radius: 16px;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: 700;
             color: #d63384;
             margin-bottom: 25px;
@@ -92,6 +165,11 @@
             cursor: pointer;
             width: 100%;
             margin-bottom: 10px;
+            transition: background 0.2s;
+        }
+
+        .btn-copy:hover {
+            background: #ff4757;
         }
 
         .btn-maps {
@@ -104,41 +182,34 @@
             text-decoration: none;
             border-radius: 12px;
             text-align: center;
+            transition: background 0.2s;
+        }
+
+        .btn-maps:hover {
+            background: #1e90ff;
         }
     </style>
 </head>
 <body>
 
-    <div class="card">
-        <div class="header-icon"></div>
-        <h1>Invitation Spéciale</h1>
-        <p class="subtitle"></p>
+    <button class="admin-toggle" onclick="toggleAdminPanel()" title="Modifier les infos">⚙️</button>
 
-        <div class="time-box">
-            🕒 Rendez-vous à 20h30
-        </div>
+    <div class="admin-panel" id="adminPanel">
+        <h3>⚙️ Modifier le rendez-vous</h3>
+        
+        <label>Texte du rendez-vous :</label>
+        <input type="text" id="inputTime" value="🕒 Rendez-vous à 20h30">
 
-        <p class="instruction">
-            Copie le point GPS ci-dessous et colle-le dans ton appli de navigation (Google Maps, Waze, Apple Maps) :
-        </p>
+        <label>Coordonnées GPS (Lat, Long) :</label>
+        <input type="text" id="inputCoords" value="45.9308, 6.1174">
 
-        <div class="gps-coords" id="coords">45.9308, 6.1174</div>
-
-        <button class="btn-copy" onclick="copyGPS()">📋 Copier le point GPS</button>
-
-        <a id="maps-link" href="https://maps.google.com/?q=45.9308,6.1174" target="_blank" class="btn-maps">
-            🗺️ Ouvrir dans Google Maps
-        </a>
+        <button onclick="saveChanges()">💾 Enregistrer</button>
     </div>
 
-    <script>
-        function copyGPS() {
-            const coordsText = document.getElementById('coords').innerText.trim();
-            navigator.clipboard.writeText(coordsText).then(() => {
-                alert('Point GPS copié ! Tu peux le coller dans ta carte.');
-            });
-        }
-    </script>
+    <div class="card">
+        <div class="header-icon">💌</div>
+        <h1>Invitation Spéciale</h1>
+        <p class="subtitle">Un moment rien que pour nous</p>
 
-</body>
-</html>
+        <div class="time-box" id="displayTime">
+            🕒 Rendez-vous à 20
