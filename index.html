@@ -104,3 +104,237 @@
         .card {
             background: #ffffff;
             padding: 35px 25px;
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(225, 112, 137, 0.3);
+            max-width: 420px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .header-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            color: #d63384;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #6c757d;
+            font-size: 0.95rem;
+            margin-bottom: 25px;
+        }
+
+        .time-box {
+            background: #fff0f5;
+            border: 2px dashed #ff85a2;
+            padding: 15px;
+            border-radius: 16px;
+            margin-bottom: 25px;
+        }
+
+        .date-display {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #ff6b81;
+            margin-bottom: 4px;
+        }
+
+        .time-display {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #d63384;
+        }
+
+        .instruction {
+            color: #495057;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .gps-coords {
+            font-family: monospace;
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 12px;
+            color: #d63384;
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            border: 1px solid #f8d7da;
+        }
+
+        .btn-copy {
+            background: #ff6b81;
+            color: #ffffff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 10px;
+            transition: background 0.2s;
+        }
+
+        .btn-copy:hover {
+            background: #ff4757;
+        }
+
+        .btn-maps {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: #70a1ff;
+            color: #ffffff;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 12px;
+            text-align: center;
+            transition: background 0.2s;
+        }
+
+        .btn-maps:hover {
+            background: #1e90ff;
+        }
+    </style>
+</head>
+<body>
+
+    <button class="admin-toggle" onclick="toggleAdminPanel()" title="Modifier les infos">⚙️</button>
+
+    <div class="admin-panel" id="adminPanel">
+        <h3>⚙️ Modifier le rendez-vous</h3>
+        
+        <label>Date du rendez-vous :</label>
+        <input type="date" id="inputDate">
+
+        <label>Heure / Note :</label>
+        <input type="text" id="inputTime" value="🕒 Rendez-vous à 20h30">
+
+        <label>Coordonnées GPS (Lat, Long) :</label>
+        <input type="text" id="inputCoords" value="45.9308, 6.1174">
+
+        <button onclick="saveChanges()">💾 Enregistrer</button>
+    </div>
+
+    <div class="card">
+        <div class="header-icon">💌</div>
+        <h1>Invitation Spéciale</h1>
+        <p class="subtitle">Un moment rien que pour nous</p>
+
+        <div class="time-box">
+            <div class="date-display" id="displayDate">📅 Samedi 15 Août</div>
+            <div class="time-display" id="displayTime">🕒 Rendez-vous à 20h30</div>
+        </div>
+
+        <p class="instruction">
+            Copie le point GPS ci-dessous et colle-le dans ton appli de navigation (Google Maps, Waze, Apple Maps) :
+        </p>
+
+        <div class="gps-coords" id="coords">45.9308, 6.1174</div>
+
+        <button class="btn-copy" onclick="copyGPS()">📋 Copier le point GPS</button>
+
+        <a id="maps-link" href="#" target="_blank" class="btn-maps">
+            🗺️ Ouvrir dans Google Maps
+        </a>
+    </div>
+
+    <script>
+        const ADMIN_PASSWORD = "1234"; // 🔑 Mot de passe admin
+
+        // Initialisation au chargement de la page
+        document.addEventListener("DOMContentLoaded", () => {
+            const savedDate = localStorage.getItem("rdv_date");
+            const savedTime = localStorage.getItem("rdv_time");
+            const savedCoords = localStorage.getItem("rdv_coords");
+
+            if (savedDate) {
+                document.getElementById('inputDate').value = savedDate;
+                formatAndDisplayDate(savedDate);
+            }
+            if (savedTime) {
+                document.getElementById('displayTime').innerText = savedTime;
+                document.getElementById('inputTime').value = savedTime;
+            }
+            if (savedCoords) {
+                updateCoordsDisplay(savedCoords);
+                document.getElementById('inputCoords').value = savedCoords;
+            } else {
+                updateCoordsDisplay(document.getElementById('coords').innerText.trim());
+            }
+        });
+
+        // Formater la date en français (ex: Samedi 15 août 2026)
+        function formatAndDisplayDate(dateString) {
+            if (!dateString) return;
+            const dateObj = new Date(dateString + 'T00:00:00');
+            const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+            let formattedDate = dateObj.toLocaleDateString('fr-FR', options);
+            // Capitaliser la première lettre
+            formattedDate = formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
+            document.getElementById('displayDate').innerText = `📅 ${formattedDate}`;
+        }
+
+        // Ouvrir/Fermer le panneau admin avec mot de passe
+        function toggleAdminPanel() {
+            const panel = document.getElementById('adminPanel');
+            if (panel.classList.contains('active')) {
+                panel.classList.remove('active');
+            } else {
+                const pass = prompt("Entrez le mot de passe pour modifier :");
+                if (pass === ADMIN_PASSWORD) {
+                    panel.classList.add('active');
+                } else if (pass !== null) {
+                    alert("Mot de passe incorrect !");
+                }
+            }
+        }
+
+        // Sauvegarder les modifications apportées
+        function saveChanges() {
+            const newDate = document.getElementById('inputDate').value;
+            const newTime = document.getElementById('inputTime').value;
+            const newCoords = document.getElementById('inputCoords').value.trim();
+
+            if (newDate) {
+                formatAndDisplayDate(newDate);
+                localStorage.setItem("rdv_date", newDate);
+            }
+
+            document.getElementById('displayTime').innerText = newTime;
+            updateCoordsDisplay(newCoords);
+
+            localStorage.setItem("rdv_time", newTime);
+            localStorage.setItem("rdv_coords", newCoords);
+
+            document.getElementById('adminPanel').classList.remove('active');
+            alert("Rendez-vous mis à jour !");
+        }
+
+        // Met à jour les coordonnées et génère le lien Google Maps valide
+        function updateCoordsDisplay(coords) {
+            document.getElementById('coords').innerText = coords;
+            const cleanCoords = coords.replace(/\s+/g, '');
+            document.getElementById('maps-link').href = `https://www.google.com/maps/search/?api=1&query=${cleanCoords}`;
+        }
+
+        // Fonction pour copier le texte GPS
+        function copyGPS() {
+            const coordsText = document.getElementById('coords').innerText.trim();
+            navigator.clipboard.writeText(coordsText).then(() => {
+                alert('Point GPS copié ! Tu peux le coller dans ta carte.');
+            });
+        }
+    </script>
+
+</body>
+</html>
